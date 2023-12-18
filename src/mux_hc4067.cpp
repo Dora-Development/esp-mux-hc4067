@@ -46,6 +46,11 @@ MuxHC4067::MuxHC4067(gpio_num_t s0, gpio_num_t s1, gpio_num_t s2, gpio_num_t s3,
     gpio_set_direction(this->s3, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->sig, GPIO_MODE_INPUT_OUTPUT);
 
+    gpio_set_level(this->s0, 0);
+    gpio_set_level(this->s1, 0);
+    gpio_set_level(this->s2, 0);
+    gpio_set_level(this->s3, 0);
+
     if (this->en != GPIO_NUM_NC)
     {
         gpio_set_direction(this->en, GPIO_MODE_OUTPUT);
@@ -86,7 +91,8 @@ void MuxHC4067::selectChannel(int channel)
 
     while (mask)
     {
-        gpio_set_level(select_pins[i--], !!(mask & (channel & 0x0F)));
+        gpio_num_t pin = select_pins[i--];
+        gpio_set_level(pin, !!(mask & (channel & 0x0F)));
         mask >>= 1;
     }
 
