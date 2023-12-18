@@ -40,6 +40,12 @@
 MuxHC4067::MuxHC4067(gpio_num_t s0, gpio_num_t s1, gpio_num_t s2, gpio_num_t s3, gpio_num_t sig, gpio_num_t en)
     : s0(s0), s1(s1), s2(s2), s3(s3), sig(sig), en(en)
 {
+    gpio_reset_pin(this->s0);
+    gpio_reset_pin(this->s1);
+    gpio_reset_pin(this->s2);
+    gpio_reset_pin(this->s3);
+    gpio_reset_pin(this->sig);
+
     gpio_set_direction(this->s0, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->s1, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->s2, GPIO_MODE_OUTPUT);
