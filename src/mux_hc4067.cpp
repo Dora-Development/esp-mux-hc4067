@@ -85,14 +85,14 @@ void MuxHC4067::selectChannel(int channel)
 {
     this->disable();
 
-    uint8_t mask = 0x08;
+    volatile uint8_t mask = 0x08;
     uint8_t i = 3;
 
     gpio_num_t select_pins[] = {
         this->s0,
         this->s1,
         this->s2,
-        this->s3
+        this->s3,
     };
 
     while (mask)
