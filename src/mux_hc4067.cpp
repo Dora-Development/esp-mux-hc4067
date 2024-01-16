@@ -27,6 +27,9 @@
 #include <driver/gpio.h>
 #include <inttypes.h>
 
+#include <map>
+#include <vector>
+
 /**
  * @brief Construct a new MuxHC4067
  *
@@ -85,21 +88,31 @@ void MuxHC4067::selectChannel(int channel)
 {
     this->disable();
 
-    volatile uint8_t mask = 0x08;
-    uint8_t i = 3;
-
-    gpio_num_t select_pins[] = {
-        this->s0,
-        this->s1,
-        this->s2,
-        this->s3,
+    std::map<int, std::vector<uint32_t>> bits = {
+        {0, {0, 0, 0, 0}},
+        {1, {1, 0, 0, 0}},
+        {2, {0, 1, 0, 0}},
+        {3, {1, 1, 0, 0}},
+        {4, {0, 0, 1, 0}},
+        {5, {1, 0, 1, 0}},
+        {6, {0, 1, 1, 0}},
+        {7, {1, 1, 1, 0}},
+        {8, {0, 0, 0, 1}},
+        {9, {1, 0, 0, 1}},
+        {10, {0, 1, 0, 1}},
+        {11, {1, 1, 0, 1}},
+        {12, {0, 0, 1, 1}},
+        {13, {1, 0, 1, 1}},
+        {14, {0, 1, 1, 1}},
+        {15, {1, 1, 1, 1}},
     };
 
-    while (mask)
+    if (bits.find(channel) != bits.end())
     {
-        gpio_num_t pin = select_pins[i--];
-        gpio_set_level(pin, !!(mask & (channel & 0x0F)));
-        mask >>= 1;
+        gpio_set_level(this->s0, bits[channel][0]);
+        gpio_set_level(this->s1, bits[channel][1]);
+        gpio_set_level(this->s2, bits[channel][2]);
+        gpio_set_level(this->s3, bits[channel][3]);
     }
 
     this->enable();
