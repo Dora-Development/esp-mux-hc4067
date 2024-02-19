@@ -39,6 +39,8 @@
  * @param s3 Select pin 3
  * @param sig SIG pin
  * @param en Enable pin
+ * @param sig_mode SIG pin direction
+ * @param sig_pull_mode SIG pin pull
  */
 MuxHC4067::MuxHC4067(gpio_num_t s0,
                      gpio_num_t s1,
