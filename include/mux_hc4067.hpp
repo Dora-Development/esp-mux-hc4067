@@ -30,7 +30,14 @@
 class MuxHC4067
 {
 public:
-    MuxHC4067(gpio_num_t s0, gpio_num_t s1, gpio_num_t s2, gpio_num_t s3, gpio_num_t sig, gpio_num_t en = GPIO_NUM_NC);
+    MuxHC4067(gpio_num_t s0,
+              gpio_num_t s1,
+              gpio_num_t s2,
+              gpio_num_t s3,
+              gpio_num_t sig,
+              gpio_num_t en,
+              gpio_mode_t sig_mode = GPIO_MODE_INPUT_OUTPUT,
+              gpio_pull_mode_t sig_pull_mode = GPIO_PULLDOWN_ONLY);
     ~MuxHC4067();
 
     bool get(int channel);

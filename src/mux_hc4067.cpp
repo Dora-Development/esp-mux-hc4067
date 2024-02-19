@@ -40,21 +40,34 @@
  * @param sig SIG pin
  * @param en Enable pin
  */
-MuxHC4067::MuxHC4067(gpio_num_t s0, gpio_num_t s1, gpio_num_t s2, gpio_num_t s3, gpio_num_t sig, gpio_num_t en)
+MuxHC4067::MuxHC4067(gpio_num_t s0,
+                     gpio_num_t s1,
+                     gpio_num_t s2,
+                     gpio_num_t s3,
+                     gpio_num_t sig,
+                     gpio_num_t en,
+                     gpio_mode_t sig_mode,
+                     gpio_pull_mode_t sig_pull_mode)
     : s0(s0), s1(s1), s2(s2), s3(s3), sig(sig), en(en)
 {
+    // Reset all mux pins
     gpio_reset_pin(this->s0);
     gpio_reset_pin(this->s1);
     gpio_reset_pin(this->s2);
     gpio_reset_pin(this->s3);
     gpio_reset_pin(this->sig);
 
+    // Set directions for pins
     gpio_set_direction(this->s0, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->s1, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->s2, GPIO_MODE_OUTPUT);
     gpio_set_direction(this->s3, GPIO_MODE_OUTPUT);
-    gpio_set_direction(this->sig, GPIO_MODE_INPUT_OUTPUT);
+    gpio_set_direction(this->sig, sig_mode);
 
+    // Set SIG pin pull mode
+    gpio_set_pull_mode(this->sig, sig_pull_mode);
+
+    // Set default channel
     gpio_set_level(this->s0, 0);
     gpio_set_level(this->s1, 0);
     gpio_set_level(this->s2, 0);
