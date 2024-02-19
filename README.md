@@ -19,7 +19,7 @@ Component ESP-IDF for HC4067 support
 
 extern "C" void app_main()
 {
-    MuxHC4067 mux = MuxHC4067(S0_PIN, S1_PIN, S2_PIN, S3_PIN, SIG_PIN);
+    MuxHC4067 mux = MuxHC4067(S0_PIN, S1_PIN, S2_PIN, S3_PIN, SIG_PIN, GPIO_NUM_NC);
     
     bool state = true;
 
